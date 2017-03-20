@@ -9,12 +9,15 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
+
 io.on('connection', function(socket){
   socket.on('chat message', function(msg){
-    console.log('message: ' + msg);
+    io.emit('chat message', msg);
   });
 });
 
 http.listen(process.env.PORT, function(){
   console.log('listening on *:3000');
 });
+io.emit('some event', { for: 'everyone' });
+
